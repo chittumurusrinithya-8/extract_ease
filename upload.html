@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Extract Ease - Upload</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f9fafb;
+    }
+    .sidebar {
+      width: 230px;
+      background-color: #f1f5f9;
+      height: 100vh;
+      float: left;
+      padding-top: 20px;
+    }
+    .sidebar h3 {
+      padding-left: 20px;
+      color: #2563eb;
+    }
+    .sidebar a {
+      display: block;
+      padding: 15px 20px;
+      text-decoration: none;
+      color: black;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+    .sidebar a.active, .sidebar a:hover {
+      background-color: #2563eb;
+      color: white;
+    }
+    .main {
+      margin-left: 230px;
+      padding: 40px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .upload-box, .summary-box {
+      background-color: rgb(241, 245, 247);
+      border: 1px dashed #acccf3;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .upload-box button, .summary-box button {
+      padding: 10px 20px;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .upload-box button:hover, .summary-box button:hover {
+      background-color: #0d3361;
+      color: #e0e7ff;
+    }
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #a0c5f3;
+      border-radius: 8px;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h3>Extract Ease</h3>
+    <a href="index.html">Home</a>
+    <a href="upload.html" class="active">Upload Files</a>
+    <a href="recent.html">Recent</a>
+  </div>
+
+  <div class="main">
+    <!-- Upload Section -->
+    <div class="section">
+      <div class="header">
+        <h2>Upload Documents</h2>
+        <p>Upload image files to extract and correct text</p>
+      </div>
+      <div class="upload-box">
+        <form id="uploadForm">
+          <p><strong>Select your document</strong></p>
+          <input type="file" id="imageInput" name="image" accept="image/*" required>
+          <br><br>
+          <button type="button" id="extractBtn">Extract Text</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Display Fields Section -->
+    <div class="section">
+      <div class="header">
+        <h2>Text Output</h2>
+      </div>
+      <div class="summary-box">
+        <textarea id="correctedText" rows="10" placeholder="Corrected text will appear here..."></textarea>
+        <br><br>
+        <button id="summarizeBtn">Summarize Text</button>
+        <br><br>
+        <textarea id="summaryText" rows="6" placeholder="Summary will appear here..."></textarea>
+        <br><br>
+        <button onclick="downloadPDF()">Download as PDF</button>
+        <input type="hidden" id="documentId" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ✅ Extract Text
+    document.getElementById("extractBtn")?.addEventListener("click", async () => {
+      const fileInput = document.getElementById("imageInput");
+      const file = fileInput?.files[0];
+      if (!file) {
+        alert("Please select an image first.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/process", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          alert("Error: " + (result.error || "Failed to process image"));
+          return;
+        }
+
+        document.getElementById("correctedText").value = result.corrected_text || "";
+        if (result.document_id) {
+          document.getElementById("documentId").value = result.document_id;
+        }
+
+      } catch (error) {
+        console.error("Error during extraction:", error);
+        alert("Failed to extract text. See console for details.");
+      }
+    });
+
+    // ✅ Summarize
+    document.getElementById("summarizeBtn")?.addEventListener("click", async () => {
+      const text = document.getElementById("correctedText")?.value.trim();
+      const docId = document.getElementById("documentId")?.value;
+
+      if (!text) {
+        alert("No corrected text available to summarize.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/summarize", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text, document_id: docId }),
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          alert("Error: " + (result.error || "Failed to summarize text"));
+          return;
+        }
+
+        const summary = result.summary || "No summary returned";
+        const summaryTextElem = document.getElementById("summaryText");
+        if (summaryTextElem) {
+          summaryTextElem.value = summary;
+        } else {
+          alert("Summary:\n" + summary);
+        }
+      } catch (error) {
+        console.error("Error during summarization:", error);
+        alert("Failed to summarize text.");
+      }
+    });
+
+    // ✅ Download PDF
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const extractedText = document.getElementById("correctedText")?.value.trim();
+      const summaryText = document.getElementById("summaryText")?.value.trim();
+
+      if (!extractedText) {
+        alert("No extracted text to download.");
+        return;
+      }
+
+      const lines = doc.splitTextToSize("Extracted Text:\n" + extractedText, 180);
+      doc.text(lines, 10, 10);
+
+      if (summaryText) {
+        const summaryLines = doc.splitTextToSize("\nSummary:\n" + summaryText, 180);
+        doc.text(summaryLines, 10, doc.lastAutoTable?.finalY || 10 + lines.length * 7 + 10);
+      }
+
+      doc.save("extracted_text.pdf");
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+

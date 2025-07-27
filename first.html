@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Extract Ease - Home</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* Main Card: White */
+    .wrapper {
+      background: #ffffff;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 380px;
+      width: 90%;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .wrapper:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Logo */
+    .logo {
+      width: 110px;
+      height: auto;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 3px 8px rgba(31, 60, 136, 0.2));
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    /* Headings & Typography */
+    h1 {
+      font-size: 2rem;
+      color: #1f3c88;
+      margin: 0 0 12px 0;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 6px rgba(31, 60, 136, 0.1);
+      animation: fadeInUp 0.8s ease-out;
+    }
+    p {
+      font-size: 1rem;
+      color: #4a4a4a;
+      margin-bottom: 25px;
+      line-height: 1.5;
+      font-weight: 400;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    /* Button with Shine Effect (kept for engagement) */
+    .login-button {
+      background: linear-gradient(45deg, #1f3c88, #163172);
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(31, 60, 136, 0.3);
+      transition: all 0.3s ease;
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    .login-button:hover:before {
+      left: 100%;
+    }
+    .login-button:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 25px rgba(31, 60, 136, 0.4);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .wrapper { padding: 25px 20px; }
+      h1 { font-size: 1.8rem; }
+      p { font-size: 0.95rem; }
+      .login-button { padding: 10px 24px; font-size: 0.95rem; }
+      .logo { width: 100px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <img src="images/logo.jpg" alt="Project Logo" class="logo">
+    <h1>Extract Ease</h1>
+    <p><i>Smart document assistant to extract, correct, and summarize handwritten or printed content effortlessly.</i></p>
+    <a href="index.html" class="login-button">Click here to Login</a>
+  </div>
+</body>
+</html>
+```
+
+
+

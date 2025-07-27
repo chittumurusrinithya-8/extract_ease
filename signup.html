@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Extract Ease - Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url('images/backgrounds.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.7);
+      z-index: 0;
+    }
+
+    .signup-box {
+      z-index: 1;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .signup-box img {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    .signup-box h2 {
+      color: #007bff;
+      font-weight: 700;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .signup-box p {
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .signup-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .signup-form input {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .signup-form button {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .signup-form button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-login {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    .back-login a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .back-login a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-box">
+    <img src="images/logo.jpg" alt="Extract Ease Logo" />
+    <h2>Extract Ease</h2>
+    <p>Welcome! Please create your account below.</p>
+
+    <form class="signup-form" onsubmit="return signup(event)">
+      <input type="text" id="newUsername" placeholder="Create Username" required />
+      <input type="password" id="newPassword" placeholder="Create Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="back-login">
+      Already have an account? <a href="index.html">Login here</a>
+    </div>
+  </div>
+
+  <script>
+    function signup(event) {
+      event.preventDefault();
+      const username = document.getElementById('newUsername').value.trim();
+      const password = document.getElementById('newPassword').value.trim();
+
+      if (username && password) {
+        alert("Sign up successful!");
+        window.location.href = "upload.html";
+      } else {
+        alert("Please fill in all fields.");
+      }
+
+      return false;
+    }
+  </script>
+</body>
+</html>
+
