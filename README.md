@@ -21,7 +21,7 @@ The extracted text can be summarized on demand, making it ideal for academic, pr
 ## 🛠 Tech Stack
 
 **Frontend:**  
-- HTML, CSS, JavaScript *(or React.js if applicable)*  
+- HTML, CSS, JavaScript
 
 **Backend:**  
 - Python, Flask  
@@ -41,41 +41,46 @@ The extracted text can be summarized on demand, making it ideal for academic, pr
 
 ## 📂 Project Structure
 
-ExtractEase/
-│
-├── backend/
-│ ├── app.py # Flask application
-│ ├── requirements.txt # Python dependencies
-│
-├── frontend/
-│ ├── index.html # Main frontend page
-│ ├── style.css # Styling
-│ ├── script.js # Frontend logic
-│
-├── README.md # Project documentation
-└── .env.example # Environment variable template
+Extract_Ease/
+├── Backend/
+│ └── app.py
+├── Frontend/
+│ ├── images/
+│ │ ├── backgrounds.jpg
+│ │ └── logo.jpg
+│ ├── first.html
+│ ├── index.html
+│ ├── recent.html
+│ ├── signup.html
+│ ├── upload.html
+│ ├── script.js
+│ ├── style.css
+├── .env
+├── requirements.txt
 
 
 
 ## ⚙ Installation & Setup
 
-### 1️Clone the Repository
+ 1️.Clone the Repository
 ```bash
 git clone https://github.com/your-username/ExtractEase.git
 cd ExtractEase
-2️ Create a Virtual Environment
+2️.Create a Virtual Environment
 bash
 Copy
 Edit
 python -m venv venv
 source venv/bin/activate    # On macOS/Linux
 venv\Scripts\activate       # On Windows
-3️ Install Dependencies
+
+**3️.Install Dependencies**
 bash
 Copy
 Edit
 pip install -r backend/requirements.txt
-4 Set Up Environment Variables
+
+**4.Set Up Environment Variables**
 Create a .env file in the backend folder:
 
 ini
@@ -105,7 +110,7 @@ Click "Summarize" to get a short version of the extracted text.
 Download or copy the results.
 
 
-📈 Future Enhancements
+ Future Enhancements
 
  Multilingual OCR support.
 
@@ -113,9 +118,9 @@ Download or copy the results.
 
 Question Answring Bot
 
-🤝 Contributing
+ Contributing
 Pull requests are welcome!
 For major changes, please open an issue first to discuss what you would like to change.
 
-📜 License
+ License
 This project is licensed under the MIT License – see the LICENSE file for details.
